@@ -43,6 +43,7 @@ A = kron(A1,kron(A2,A3));
 noise_var = (signal_power)/SNR_local;
 noise = sqrt(noise_var)*randn(size(y_ori));
 y = y_ori + noise;
+%% no pruning
 %% AM_KroSBL
 [metrics_am_con] = am_kroSBL_con(noise_var,y,A1,A2,A3,A,N,R_max_local,x,func_ctrl);
 %% SVD_KroSBL
@@ -51,3 +52,12 @@ y = y_ori + noise;
 [metrics_sota_con] = sota_kroSBL_con(noise_var,y,A1,A2,A3,A,N,R_max_local,x,func_ctrl);
 %% classic SBL
 [metrics_csbl_con] = classicSBL_con(noise_var,y,A,N,R_max_local,x,func_ctrl);
+%% with pruning
+%% AM_KroSBL
+[metrics_am_con2] = am_kroSBL_con2(noise_var,y,A1,A2,A3,A,N,R_max_local,x,func_ctrl);
+%% SVD_KroSBL
+[metrics_svd_con2] = svd_kroSBL_con2(noise_var,y,A1,A2,A3,A,N,R_max_local,x,func_ctrl);
+%% KSBL
+[metrics_sota_con2] = sota_kroSBL_con2(noise_var,y,A1,A2,A3,A,N,R_max_local,x,func_ctrl);
+%% classic SBL
+[metrics_csbl_con2] = classicSBL_con2(noise_var,y,A,N,R_max_local,x,func_ctrl);
