@@ -272,7 +272,7 @@ end
 % load(filename)
 %%
 load('result_paper.mat')
-trial = 100;
+trial = 50;
 lengt = 5;
 errorAggr = zeros(8,lengt); % 8 algorithms
 srrAggr = zeros(8,lengt);
