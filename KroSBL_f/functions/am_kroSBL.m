@@ -22,9 +22,9 @@ norma = 1;
 itra = 1;
 
 r_absolute = 0;
-r1 = 1e-3;
-r2 = 1e-3;
-r3 = 1e-3;
+r1 = 1e-2;
+r2 = 1e-2;
+r3 = 1e-2;
 thres = 1e-4;
 
 if ~func_ctrl.noisy_convergence
