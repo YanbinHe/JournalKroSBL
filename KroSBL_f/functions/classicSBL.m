@@ -10,7 +10,7 @@ keep_listc = 1:N^3;
 normc = 1;
 itrc = 1;
 
-r_rele = 5*1e-4;
+r_rele = 1e-3;
 thres = 1e-4;
 
 if func_ctrl.noisy_convergence
