@@ -40,7 +40,7 @@ while(itrc < R_max + 1 && normc > thres) % do the iteration
 
     % update the posterior
     Gammac = diag(gammac);
-    invPhic = A'* (noise_var * eye(size(A,1)) + A * Gammac * A')^-1 * A;
+    invPhic = A'* (noise_var * eye(size(A,1)) + A * Gammac * A')^-1 * A; % we recommend to switch pinv() if noise_var is too low for better numerical stability.
     Sigma_x = Gammac - Gammac * invPhic * Gammac;
     x_re = noise_var^-1 * Sigma_x * A' * y;
     
