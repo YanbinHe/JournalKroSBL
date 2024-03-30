@@ -34,7 +34,7 @@ r3 = 1e-2;
 
 
 while(itr1v < numItr + 1 && norm1 > thres) % do the iteration
-    itr1v
+    itr1v;
     
     tic;
     
@@ -145,7 +145,7 @@ while(itr1v < numItr + 1 && norm1 > thres) % do the iteration
     gammare(keep_list) = gamma;
     
     norm1 = norm(gammare - gamma_old)/norm(gamma_old);
-    norm(gammare - gamma_old)/norm(gamma_old)
+    norm(gammare - gamma_old)/norm(gamma_old);
     
     itr1v = itr1v + 1;
 end
@@ -161,7 +161,7 @@ for i = 1:K2
     Ht(:,:,i) = Htt(:,1:Res1);
     H_re(:,:,i) = kron(kron(Ht(:,:,i),conj(A1)),A2_ori)*mu_x_est;
     Htrue(:,:,i) = vec(H2*diag(irs_pattern(:,i))*H1);
-    nmse(i) = norm(H_re(:,:,i) - Htrue(:,:,i),'fro')/norm(Htrue(:,:,i),'fro');
+    nmse(i) = (norm(H_re(:,:,i) - Htrue(:,:,i),'fro')/norm(Htrue(:,:,i),'fro'))^2;
 end
 
 error = sum(nmse(:))/K2

@@ -24,7 +24,7 @@ itrp=1;
 normp = 1;
 
 while(itrp < numItr + 1 && normp > thres)
-    itrp
+    itrp;
     
     tic;
     mu_old=mu_new;
@@ -59,23 +59,20 @@ while(itrp < numItr + 1 && normp > thres)
     time = time + toc;
     
     
-    normp = norm(mu_new - mu_old)/norm(mu_old)
-    
-    for i = 1:K2
-        Htt = irs_pattern(:,i).'*kr(A_irs_a.',A_irs_d').';
-        Ht(:,:,i) = Htt(:,1:Res1);
-        H_re(:,:,i) = kron(kron(Ht(:,:,i),conj(A1)),A2)*mu_new;
-        Htrue(:,:,i) = vec(H2*diag(irs_pattern(:,i))*H1);       
-        nmse(itrp,i) = norm(H_re(:,:,i) - Htrue(:,:,i),'fro')/norm(Htrue(:,:,i),'fro');
-    end
-    
-
-    error = sum(nmse(itrp,:))/K2
-    errorp(itrp) = error;
+    normp = norm(mu_new - mu_old)/norm(mu_old);
     
     itrp=itrp+1;
 end
-errorp = errorp(end);
+
+for i = 1:K2
+    Htt = irs_pattern(:,i).'*kr(A_irs_a.',A_irs_d').';
+    Ht(:,:,i) = Htt(:,1:Res1);
+    H_re(:,:,i) = kron(kron(Ht(:,:,i),conj(A1)),A2)*mu_new;
+    Htrue(:,:,i) = vec(H2*diag(irs_pattern(:,i))*H1);
+    nmse(i) = (norm(H_re(:,:,i) - Htrue(:,:,i),'fro')/norm(Htrue(:,:,i),'fro'))^2;
+end
+
+errorp = sum(nmse(:))/K2
 alpha = 1./alpha_new;
 end
 

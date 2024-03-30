@@ -12,7 +12,7 @@ itrc = 1;
 r = 1e-4;
 
 while(itrc < numItr + 1 && normc > thres) % do the iteration
-    itrc
+    itrc;
     
     tic;
     
@@ -47,7 +47,7 @@ while(itrc < numItr + 1 && normc > thres) % do the iteration
     gammare(keep_listc) = gammac;
 
     normc = norm(gammare-gammac_old)/norm(gammac_old);
-    norm(gammare-gammac_old)/norm(gammac_old)
+    norm(gammare-gammac_old)/norm(gammac_old);
 
     itrc = itrc + 1; 
 end
@@ -68,7 +68,7 @@ for i = 1:K2
     Ht(:,:,i) = Htt(:,1:Res1);
     H_re(:,:,i) = kron(kron(Ht(:,:,i),conj(A1)),A2)*mu_xc_est;
     Htrue(:,:,i) = vec(H2*diag(irs_pattern(:,i))*H1);
-    nmse(i) = norm(H_re(:,:,i) - Htrue(:,:,i),'fro')/norm(Htrue(:,:,i),'fro');
+    nmse(i) = (norm(H_re(:,:,i) - Htrue(:,:,i),'fro')/norm(Htrue(:,:,i),'fro'))^2;
 end
 
 error = sum(nmse(:))/K2
