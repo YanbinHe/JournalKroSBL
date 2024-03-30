@@ -175,7 +175,7 @@ for avg = 1 : AVG % for AVG trials
         ser(6,jj) = ser_compute(Hre_pc5,Htrue,SNRl(jj),Xun,symbolmatrix,ms_ante,bs_ante,K2);
         
     end
-    filename = ['./Results/compare_noisy_try_', num2str(avg),'.mat'];
+    filename = ['./Results/compare_noisy_', num2str(avg),'.mat'];
     save(filename, 'error', 'time', 'ser')
 end
 %% Plot part
