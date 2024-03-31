@@ -10,6 +10,7 @@ run main.m
 
 
 All the files are tested in Matlab 2019b, but any later version should also work.
+A run for a simulation (50 averages) might take ~12 hours
 
 
 If you use the code here, please also cite the PC-SBL paper.
