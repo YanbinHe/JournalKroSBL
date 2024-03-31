@@ -108,7 +108,7 @@ X(Ind{:}) = reshape(a,shape);
 x_re = vec(double(X));
 
 time = toc;
-erroro = norm(x_re - x)/norm(x)
+erroro = (norm(x_re - x)/norm(x))^2
 
 srr = recover_rate(x_re,x);
 metrics={'error',erroro;

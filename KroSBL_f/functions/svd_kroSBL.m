@@ -34,7 +34,7 @@ end
 
 
 while(itrs < R_max + 1 && norms > thres) % do the iteration
-    itrs
+    itrs;
     
     tic;
     
@@ -129,7 +129,7 @@ while(itrs < R_max + 1 && norms > thres) % do the iteration
     gammal(keep_list) = gamma;
     
     norms = norm(gammal - gamma_old)/norm(gamma_old);
-    norm(gammal - gamma_old)/norm(gamma_old)
+    norm(gammal - gamma_old)/norm(gamma_old);
     itrs = itrs + 1;
 end
 
@@ -139,7 +139,7 @@ end
 x_rel = zeros(N^3,1);
 x_rel(keep_list) = x_re;
 
-errors = norm(x_rel - x)/norm(x)
+errors = (norm(x_rel - x)/norm(x))^2
 
 if ~func_ctrl.noisy_convergence
     srr = recover_rate(x_rel,x);

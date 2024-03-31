@@ -19,7 +19,7 @@ if func_ctrl.noisy_convergence
 end
 
 while(itrc < R_max + 1 && normc > thres) % do the iteration
-    itrc
+    itrc;
     
     tic;
     
@@ -40,7 +40,7 @@ while(itrc < R_max + 1 && normc > thres) % do the iteration
 
     % update the posterior
     Gammac = diag(gammac);
-    invPhic = A'* (noise_var * eye(size(A,1)) + A * Gammac * A')^-1 * A; % we recommend to switch to pinv() instead of ()^-1 if noise_var is too low for better numerical stability.
+    invPhic = A'* pinv(noise_var * eye(size(A,1)) + A * Gammac * A') * A;
     Sigma_x = Gammac - Gammac * invPhic * Gammac;
     x_re = noise_var^-1 * Sigma_x * A' * y;
     
@@ -54,7 +54,7 @@ while(itrc < R_max + 1 && normc > thres) % do the iteration
     gammal(keep_listc) = gammac;
 
     normc = norm(gammal-gammac_old)/norm(gammac_old);
-    norm(gammal-gammac_old)/norm(gammac_old)
+    norm(gammal-gammac_old)/norm(gammac_old);
     itrc = itrc + 1; 
 end
 
@@ -64,7 +64,7 @@ invPhic = A_ori'* (noise_var * eye(size(A_ori,1)) + A_ori * Gammac * A_ori')^-1 
 Sigma_x = Gammac - Gammac * invPhic * Gammac;
 x_rel = noise_var^-1 * Sigma_x * A_ori' * y;
 
-errorc = norm(x_rel - x)/norm(x)
+errorc = (norm(x_rel - x)/norm(x))^2
 
 if ~func_ctrl.noisy_convergence
     srr = recover_rate(x_rel,x);

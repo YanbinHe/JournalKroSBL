@@ -36,7 +36,7 @@ else
 end
 
 while(itra < R_max + 1 && norma > thres) % do the iteration
-    itra
+    itra;
     
     tic;
 
@@ -141,7 +141,7 @@ while(itra < R_max + 1 && norma > thres) % do the iteration
     gammal(keep_list) = gamma;
     
     norma = norm(gammal - gamma_old)/norm(gamma_old);
-    norm(gammal - gamma_old)/norm(gamma_old)
+    norm(gammal - gamma_old)/norm(gamma_old);
 
     itra = itra + 1;
 end
@@ -153,7 +153,7 @@ end
 x_rel = zeros(N^3,1);
 x_rel(keep_list) = x_re;
 
-errora = norm(x_rel - x)/norm(x)
+errora = (norm(x_rel - x)/norm(x))^2
 
 if ~func_ctrl.noisy_convergence
     srr = recover_rate(x_rel,x);
