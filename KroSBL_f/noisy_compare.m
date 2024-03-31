@@ -78,17 +78,14 @@ for avg = 1:AVG
     for m = 1:lenM
         simulationM;
     end
-
     % fig 1/2 (c) nmse and srr vs sparsity level    
 
     s = 5;
     m = 2;
-   
-    for k = 1:lenK
-        simulationK;
-    end
-    
+   %%
+    simulationK;
+
     %% save data for each trial
-    filename = ['./results/noise_compare_', num2str(avg),'.mat'];
+    filename = ['./results/noise_compare_try3_', num2str(avg),'.mat'];
     save(filename, 'resultS','resultM','resultK')
 end

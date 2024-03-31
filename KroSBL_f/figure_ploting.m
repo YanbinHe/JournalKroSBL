@@ -43,7 +43,7 @@ num_alg = 5;
 ratio = M1*M2*M3/N^3;
 
 fontsizeman = 20;
-opengl hardware
+% opengl hardware
 %%
 % data process and figures plot
 % take results.mat as input
@@ -59,20 +59,30 @@ resultKaggre = zeros(6,3,length(K));
 
 
 for t = 1:trials
-    filename = ['./results_paper/noise_compare_', num2str(t),'.mat'];
+    filename = ['./results/noise_compare_', num2str(t),'.mat'];
     load(filename)
     for algo = 1:num_alg % for each algorithm
         metric = 1;
-        for s = 1:length(SNR)
-            resultSaggre(algo,metric,s) = resultSaggre(algo,metric,s) + resultS{s}{algo,1}{metric,2};
-        end
-
-        for m = 1:length(M1)
-            resultMaggre(algo,metric,m) = resultMaggre(algo,metric,m) + resultM{m}{algo,1}{metric,2};
-        end
-
-        for k = 1:length(K)
-            resultKaggre(algo,metric,k) = resultKaggre(algo,metric,k) + resultK{k}{algo,1}{metric,2};
+        if algo == 4
+            for s = 1:length(SNR)
+                resultSaggre(algo,metric,s) = resultSaggre(algo,metric,s) + resultS{s}{algo,1}{metric,2}.^2;
+            end
+            for m = 1:length(M1)
+                resultMaggre(algo,metric,m) = resultMaggre(algo,metric,m) + resultM{m}{algo,1}{metric,2}.^2;
+            end
+            for k = 1:length(K)
+                resultKaggre(algo,metric,k) = resultKaggre(algo,metric,k) + resultK{k}{algo,1}{metric,2}.^2;
+            end
+        else
+            for s = 1:length(SNR)
+                resultSaggre(algo,metric,s) = resultSaggre(algo,metric,s) + resultS{s}{algo,1}{metric,2};
+            end
+            for m = 1:length(M1)
+                resultMaggre(algo,metric,m) = resultMaggre(algo,metric,m) + resultM{m}{algo,1}{metric,2};
+            end
+            for k = 1:length(K)
+                resultKaggre(algo,metric,k) = resultKaggre(algo,metric,k) + resultK{k}{algo,1}{metric,2};
+            end
         end
 
         metric = 3;
@@ -265,7 +275,7 @@ for algo_index = 1:num_alg
 end
 
 grid on
-ylim([1e-3,5]);
+ylim([1e-5,5]);
 % axis square
 h1 = plot(K,reshape(resultKaggre(1,metric,:),[5,1]),legend_type_set{1},'Color',all_colors(1, :),'Display',algo_name{1});
 hold on
@@ -364,7 +374,7 @@ legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},alg
 timeAggre = zeros(6,5);
 
 for t = 1:trials % for different independent runs
-    filename = ['./results_paper/noise_compare_', num2str(t),'.mat'];
+    filename = ['./results/noise_compare_', num2str(t),'.mat'];
     load(filename)
     for algo = 1:num_alg % for each algorithm
         for k = 1:length(K)
@@ -398,54 +408,38 @@ set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
 xlabel('SNR (dB)')
 ylabel('Seconds (s)')
-%%
-% subplot(5,1,1)
-% x = kron(x1,kron(x2,x3));
-% plot(x);
-% hold on
-% subplot(5,1,2)
-% plot(real(metrics_am{2,2}))
-% hold on
-% subplot(5,1,3)
-% plot(metrics_csbl{2,2})
-% hold on
-% subplot(5,1,4)
-% plot(metrics_omp{2,2})
-% hold on
-% subplot(5,1,5)
-% plot(real(metrics_svd{2,2}))
 %% Convergence performance
 load('simu_results_con.mat');
 figure
-plot(metrics_am_con{1,2},'-','Color',all_colors(2, :),'Display',algo_name{2});
+plot(metrics_am_con{1,2}.^2,'-','Color',all_colors(2, :),'Display',algo_name{2});
 hold on
-plot(metrics_svd_con{1,2},'-','Color',all_colors(3, :),'Display',algo_name{3});
+plot(metrics_svd_con{1,2}.^2,'-','Color',all_colors(3, :),'Display',algo_name{3});
 hold on
-plot(metrics_sota_con{1,2},'-','Color',all_colors(5, :),'Display',algo_name{5});
+plot(metrics_sota_con{1,2}.^2,'-','Color',all_colors(5, :),'Display',algo_name{5});
 hold on
-plot(metrics_csbl_con{1,2},'-','Color',all_colors(1, :),'Display',algo_name{1});
+plot(metrics_csbl_con{1,2}.^2,'-','Color',all_colors(1, :),'Display',algo_name{1});
 grid on
 
 slot1 = 2.^[1:10];
 slot2 = 2.^[1:8];
-con_am = plot(slot1,metrics_am_con{1,2}(slot1),'<','Color',all_colors(2, :));
+con_am = plot(slot1,metrics_am_con{1,2}(slot1).^2,'<','Color',all_colors(2, :));
 hold on
-con_svd = plot(slot2,metrics_svd_con{1,2}(slot2),'o','Color',all_colors(3, :));
+con_svd = plot(slot2,metrics_svd_con{1,2}(slot2).^2,'o','Color',all_colors(3, :));
 hold on
-con_sota = plot(slot2,metrics_sota_con{1,2}(slot2),'+','Color',all_colors(5, :));
+con_sota = plot(slot2,metrics_sota_con{1,2}(slot2).^2,'+','Color',all_colors(5, :));
 hold on
-con_sbl = plot(slot2,metrics_csbl_con{1,2}(slot2),'>','Color',all_colors(1, :));
+con_sbl = plot(slot2,metrics_csbl_con{1,2}(slot2).^2,'>','Color',all_colors(1, :));
 grid on
 
 xlim([0,2500])
-ylim([0.004,1])
-yc = yline(metrics_csbl_con{1,2}(end),'--','NMSE = 0.0234','LineWidth',3);
+ylim([0.00001,1])
+yc = yline(metrics_csbl_con{1,2}(end).^2,'--','NMSE = 0.00055','LineWidth',3);
 hold on
-ys = yline(metrics_svd_con{1,2}(end),'--','NMSE = 0.0066','LineWidth',3);
+ys = yline(metrics_svd_con{1,2}(end).^2,'--','NMSE = 0.000044','LineWidth',3);
 hold on
-yso = yline(metrics_sota_con{1,2}(end),'--','NMSE = 0.0353','LineWidth',3);
+yso = yline(metrics_sota_con{1,2}(end).^2,'--','NMSE = 0.0012','LineWidth',3);
 hold on
-ya = yline(metrics_am_con{1,2}(end),'--','NMSE = 0.0069','LineWidth',3);
+ya = yline(metrics_am_con{1,2}(end).^2,'--','NMSE = 0.000047','LineWidth',3);
 ys.LabelVerticalAlignment = 'bottom';
 yc.LabelHorizontalAlignment = 'left';
 ys.LabelHorizontalAlignment = 'left';
@@ -479,31 +473,31 @@ ylabel('NMSE')
 legend('boxoff')
 %% Convergence performance with prune
 figure
-plot(metrics_am_con2{1,2},'-','Color',all_colors(2, :),'Display',algo_name{2});
+plot(metrics_am_con2{1,2}.^2,'-','Color',all_colors(2, :),'Display',algo_name{2});
 hold on
-plot(metrics_svd_con2{1,2},'-','Color',all_colors(3, :),'Display',algo_name{3});
+plot(metrics_svd_con2{1,2}.^2,'-','Color',all_colors(3, :),'Display',algo_name{3});
 hold on
-plot(metrics_sota_con2{1,2},'-','Color',all_colors(5, :),'Display',algo_name{5});
+plot(metrics_sota_con2{1,2}.^2,'-','Color',all_colors(5, :),'Display',algo_name{5});
 hold on
-plot(metrics_csbl_con2{1,2},'-','Color',all_colors(1, :),'Display',algo_name{1});
+plot(metrics_csbl_con2{1,2}.^2,'-','Color',all_colors(1, :),'Display',algo_name{1});
 grid on
 
 slot1 = 2.^[1:10];
 slot2 = 2.^[1:8];
-con_am = plot(slot1,metrics_am_con2{1,2}(slot1),'<','Color',all_colors(2, :));
+con_am = plot(slot1,metrics_am_con2{1,2}(slot1).^2,'<','Color',all_colors(2, :));
 hold on
-con_svd = plot(slot2,metrics_svd_con2{1,2}(slot2),'o','Color',all_colors(3, :));
+con_svd = plot(slot2,metrics_svd_con2{1,2}(slot2).^2,'o','Color',all_colors(3, :));
 hold on
-con_sota = plot(slot2,metrics_sota_con2{1,2}(slot2),'+','Color',all_colors(5, :));
+con_sota = plot(slot2,metrics_sota_con2{1,2}(slot2).^2,'+','Color',all_colors(5, :));
 hold on
-con_sbl = plot(slot2,metrics_csbl_con2{1,2}(slot2),'>','Color',all_colors(1, :));
+con_sbl = plot(slot2,metrics_csbl_con2{1,2}(slot2).^2,'>','Color',all_colors(1, :));
 grid on
 
 xlim([0,500])
-ylim([0.004,1])
-yc = yline(metrics_csbl_con2{1,2}(end),'--','NMSE = 0.0234','LineWidth',3);
+ylim([0.00001,1])
+yc = yline(metrics_csbl_con2{1,2}(end).^2,'--','NMSE = 0.00052','LineWidth',3);
 hold on
-ys = yline(metrics_svd_con2{1,2}(end),'--','NMSE = 0.0066','LineWidth',3);
+ys = yline(metrics_svd_con2{1,2}(end).^2,'--','NMSE = 0.000035','LineWidth',3);
 hold on
 em = xline(150,'-','EM ends','LineWidth',3);
 % yso = yline(metrics_sota_con2{1,2}(end),'--','NMSE = 0.0353','LineWidth',3);
