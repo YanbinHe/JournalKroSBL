@@ -47,6 +47,6 @@ for avg = 1:AVG
     uNsq_simulationM;
 
     %% save data for each trial
-    filename = ['./results/unknown_nsq_time_try2_', num2str(avg),'.mat'];
+    filename = ['./results/unknown_nsq_time_', num2str(avg),'.mat'];
     save(filename, 'resultM')
 end
