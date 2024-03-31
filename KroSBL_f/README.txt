@@ -19,6 +19,6 @@ Run main.m
 
 3. put simu_results_con.mat and simu_results.mat under ./KroSBL_f, run figure_ploting.m, then you should be able to see all the figures
 
-# ./unknown_time_compare, known_unknown_nsq.mat, and review_convergence are used to reproduce the results in the response letter. For readers with general interests, you can ignore them.
+# ./unknown_time_compare, known_unknown_nsq.m, and review_convergence are used to reproduce the results in the response letter. For readers with general interests, you can ignore them.
 
 # All the files are tested in Matlab 2021b, but any later version should also work.
