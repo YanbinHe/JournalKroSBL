@@ -20,3 +20,5 @@ Run main.m
 3. put simu_results_con.mat and simu_results.mat under ./KroSBL_f, run figure_ploting.m, then you should be able to see all the figures
 
 # ./unknown_time_compare is used to reproduce the results in the response letter, you can ignore this part.
+
+# All the files are tested in Matlab 2021b, but any later version should also work.
