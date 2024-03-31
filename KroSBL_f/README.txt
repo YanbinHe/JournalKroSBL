@@ -5,7 +5,7 @@ code for KroSBL
 # Important information:
 1. Make sure you install tensor_toolbox to be able to start the simulation (already compressed in the directory ./functions, unzip and use).
 Put tensor_toolbox under ./functions
-2. A run for the simulation might take ~10 hours
+2. A run for a simulation (100 average) might take ~10 hours
 
 # How to start a simulation:
 
