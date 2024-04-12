@@ -2,7 +2,7 @@
 lenK = length(K);
 lenM = length(M1);
 lenS = length(SNR);
-rng(pi)
+
 for avg = 1:AVG
     % generate measuring dictionaries
     A1_ori = randn(M1(end),N);
@@ -86,6 +86,6 @@ for avg = 1:AVG
     simulationK;
 
     %% save data for each trial
-    filename = ['./results/noise_compare_try3_', num2str(avg),'.mat'];
+    filename = ['./results/noise_compare_', num2str(avg),'.mat'];
     save(filename, 'resultS','resultM','resultK')
 end
