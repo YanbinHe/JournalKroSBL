@@ -2,7 +2,7 @@
 lenK = length(K);
 lenM = length(M1);
 lenS = length(SNR);
-
+rng(pi)
 for avg = 1:AVG
     % generate measuring dictionaries
     A1_ori = randn(M1(end),N);
