@@ -25,6 +25,7 @@ if func_ctrl.noisy_compare
 end
 
 %% some pre-defined values
+%% some pre-defined values
 % this file aims to reproduce the figures in the paper
 run('Configuration.m');
 
@@ -75,28 +76,36 @@ opengl hardware
 % take results.mat as input
 % preprocessing
 
-%% plot computation time
-trials = 100;
-m = 2;
-s = 5;
-k = 2;
-timeAggre = zeros(6,1);
+%% plot
+ratio = M1*M2*M3/N^3;
+
+trials = 200;
+lenM = length(M1);
+errorAggre = zeros(6,lenM);
+srrAggre = zeros(6,lenM);
+timeAggre = zeros(6,lenM);
 for t = 1:trials % for different independent runs
-    filename = ['./results/unknown_nsq_time_', num2str(t),'.mat'];
+    filename = ['./resultsa/unknown_nsq_nmse_m_', num2str(t),'.mat'];
     load(filename)
-    for algo = [1,2,3,5] % for each algorithm
-        timeAggre(algo) = timeAggre(algo) + resultM{m}{algo,1}{4,2};
+    for m = 1:lenM
+        for algo = [1,2,3,5] % for each algorithm
+            errorAggre(algo,m) = errorAggre(algo,m) + resultM{m}{algo,1}{1,2};
+            srrAggre(algo,m) = srrAggre(algo,m) + resultM{m}{algo,1}{3,2};
+            timeAggre(algo,m) = timeAggre(algo,m) + resultM{m}{algo,1}{4,2};
+        end
     end
 end
 
+errorAggre = errorAggre/trials;
+srrAggre = srrAggre/trials;
 timeAggre = timeAggre/trials;
 
 figure
 for algo_index = [1,2,3,5]
-    plot(K(k),timeAggre(algo_index,:),line_type_set{algo_index},'Color',all_colors(algo_index, :),'Display',algo_name{algo_index});
+    plot(ratio,errorAggre(algo_index,:),line_type_set{algo_index},'Color',all_colors(algo_index, :),'Display',algo_name{algo_index});
     hold on
 end
-fontsizeman = 15;
+
 legend('boxoff')
 grid on
 set(gca, 'yscale', 'log');
@@ -111,5 +120,63 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('SNR (dB)')
-ylabel('Seconds (s)')
+xlabel('Under-sampling ratio','Interpreter','latex')
+ylabel('NMSE','Interpreter','latex')
+
+h1 = plot(ratio,errorAggre(1,:),legend_type_set{1},'Color',all_colors(1, :),'Display',algo_name{1});
+hold on
+h2 = plot(ratio,errorAggre(2,:),legend_type_set{2},'Color',all_colors(2, :),'Display',algo_name{2});
+hold on
+h3 = plot(ratio,errorAggre(3,:),legend_type_set{3},'Color',all_colors(3, :),'Display',algo_name{3});
+hold on
+h5 = plot(ratio,errorAggre(5,:),legend_type_set{5},'Color',all_colors(5, :),'Display',algo_name{5});
+hold on
+legend([h1 h2 h3 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{5}},'Location','northeast','Interpreter','LaTex')
+
+figure
+for algo_index = [1,2,3,5]
+    plot(ratio,srrAggre(algo_index,:),line_type_set{algo_index},'Color',all_colors(algo_index, :),'Display',algo_name{algo_index});
+    hold on
+end
+
+legend('boxoff')
+grid on
+% set(gca, 'yscale', 'log');
+set(0,'DefaultLineLineWidth',3)
+set(0,'DefaultAxesFontSize',fontsizeman)
+set(0,'DefaultLineMarkerSize',14)
+set(0,'DefaultAxesFontWeight','bold')
+set(gca,'FontSize',fontsizeman)
+set(get(gca,'Xlabel'),'FontSize',fontsizeman)
+set(get(gca,'Ylabel'),'FontSize',fontsizeman)
+set(get(gca,'Title'),'FontSize',fontsizeman)
+set(get(gca,'Xlabel'),'FontWeight','bold')
+set(get(gca,'Ylabel'),'FontWeight','bold')
+set(get(gca,'Title'),'FontWeight','bold')
+xlabel('Under-sampling ratio','Interpreter','latex')
+ylabel('SRR','Interpreter','latex')
+ylim([0,1])
+
+figure
+for algo_index = 1:num_alg
+    plot(ratio,timeAggre(algo_index,:),line_type_set{algo_index},'Color',all_colors(algo_index, :),'Display',algo_name{algo_index});
+    hold on
+end
+fontsizeman = 15;
+legend('boxoff')
+title('(a)')
+grid on
+set(gca, 'yscale', 'log');
+set(0,'DefaultLineLineWidth',3)
+set(0,'DefaultAxesFontSize',fontsizeman)
+set(0,'DefaultLineMarkerSize',14)
+set(0,'DefaultAxesFontWeight','bold')
+set(gca,'FontSize',fontsizeman)
+set(get(gca,'Xlabel'),'FontSize',fontsizeman)
+set(get(gca,'Ylabel'),'FontSize',fontsizeman)
+set(get(gca,'Title'),'FontSize',fontsizeman)
+set(get(gca,'Xlabel'),'FontWeight','bold')
+set(get(gca,'Ylabel'),'FontWeight','bold')
+set(get(gca,'Title'),'FontWeight','bold')
+xlabel('SNR (dB)','Interpreter','LaTex')
+ylabel('Seconds (s)','Interpreter','LaTex')
