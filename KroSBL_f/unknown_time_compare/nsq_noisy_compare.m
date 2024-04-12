@@ -1,7 +1,6 @@
 % noisy compare
 lenM = length(M1);
-rng(1)
-%%
+
 for avg = 1:AVG
     % this is for major revision purpose
     
