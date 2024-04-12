@@ -22,9 +22,9 @@ norma = 1;
 itra = 1;
 
 r_absolute = 0;
-r1 = 1e-2;
-r2 = 1e-2;
-r3 = 1e-2;
+r1 = .5*1e-2;
+r2 = .5*1e-2;
+r3 = .5*1e-2;
 thres = 1e-4;
 
 thres_inner = 1e-5;
@@ -159,7 +159,8 @@ srr = recover_rate(x_rel,x);
 metrics={'error',errora;
     'vector',x_rel;
     'support recovery rate',srr;
-    'time',time
+    'time',time;
+    'nSq', noise_var
     };
 
 end

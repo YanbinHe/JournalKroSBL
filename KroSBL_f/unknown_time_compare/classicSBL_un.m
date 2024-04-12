@@ -72,7 +72,8 @@ if ~func_ctrl.noisy_convergence
     metrics={'error',errorc;
              'vector',x_rel;
              'support recovery rate',srr;
-             'time',time
+             'time',time;
+             'nSq', noise_var
              };
 else
     metrics={'error',errorc;

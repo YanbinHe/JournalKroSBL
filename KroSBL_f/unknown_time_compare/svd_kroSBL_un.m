@@ -23,9 +23,9 @@ norms = 1;
 itrs = 1;
 
 r_absolute = 0;
-r1 = 1e-3;
-r2 = 1e-3;
-r3 = 1e-3;
+r1 = .5*1e-3;
+r2 = .5*1e-3;
+r3 = .5*1e-3;
 thres = 1e-4;
 
 while(itrs < R_max + 1 && norms > thres) % do the iteration
@@ -147,7 +147,8 @@ srr = recover_rate(x_rel,x);
 metrics={'error',errors;
     'vector',x_rel;
     'support recovery rate',srr;
-    'time',time
+    'time',time;
+    'nSq', noise_var
     };
 
 
