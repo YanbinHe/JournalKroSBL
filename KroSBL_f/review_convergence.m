@@ -62,14 +62,14 @@ grid on
 hold on
 
 xlim([0,4000])
-ylim([0.00001,10])
-yc = yline(metrics_csbl_con{1,2}(end),'--','NMSE = 0.0016','LineWidth',3);
+yticks([1e-5 1e-4 1e-3 1e-2 1e-1 1])
+yc = yline(metrics_csbl_con{1,2}(end),'--','NMSE = 0.0016','LineWidth',3,'Interpreter','LaTex');
 hold on
-ys = yline(metrics_svd_con{1,2}(end),'--','NMSE = 0.000039','LineWidth',3);
+ys = yline(metrics_svd_con{1,2}(end),'--','NMSE = 0.000039','LineWidth',3,'Interpreter','LaTex');
 hold on
-yso = yline(metrics_sota_con{1,2}(end),'--','NMSE = 0.00037','LineWidth',3);
+yso = yline(metrics_sota_con{1,2}(end),'--','NMSE = 0.00037','LineWidth',3,'Interpreter','LaTex');
 hold on
-ya = yline(metrics_am_con{1,2}(end),'--','NMSE = 0.000038','LineWidth',3);
+ya = yline(metrics_am_con{1,2}(end),'--','NMSE = 0.000038','LineWidth',3,'Interpreter','LaTex');
 ys.LabelVerticalAlignment = 'bottom';
 yc.LabelHorizontalAlignment = 'left';
 ys.LabelHorizontalAlignment = 'left';
@@ -83,7 +83,7 @@ yc.FontSize = 16;
 ys.FontSize = 16;
 ya.FontSize = 16;
 yso.FontSize = 16;
-title('Unknown noise variance')
+title('Unknown noise variance','Interpreter','LaTex')
 legend([con_am,con_svd,con_sbl,con_sota],algo_name{2},algo_name{3},algo_name{1},algo_name{5},'Interpreter','LaTex');
 set(gca, 'yscale', 'log');
 set(gca, 'xscale', 'log');
@@ -98,11 +98,10 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('EM iteration number')
-ylabel('NMSE')
+xlabel('EM iteration number','Interpreter','LaTex')
+ylabel('NMSE','Interpreter','LaTex')
 legend('boxoff')
-% Convergence performance
-% load('simu_results_con.mat');
+%% Convergence performance
 all_colors = [0, 70/255, 222/255;
               0.6350, 0.0780, 0.1840;
               0, 0.4470, 0.7410
@@ -141,36 +140,37 @@ num_alg = 5;
 fontsizeman = 20;
 figure
 
-plot(metrics_am_con3{1,2},':','Color',all_colors(2, :),'Display',algo_name{2});
+plot(metrics_am_con3{1,2},'-','Color',all_colors(2, :),'Display',algo_name{2});
 hold on
-plot(metrics_svd_con3{1,2},':','Color',all_colors(3, :),'Display',algo_name{3});
+plot(metrics_svd_con3{1,2},'-','Color',all_colors(3, :),'Display',algo_name{3});
 hold on
-plot(metrics_sota_con3{1,2},':','Color',all_colors(5, :),'Display',algo_name{5});
+plot(metrics_sota_con3{1,2},'-','Color',all_colors(5, :),'Display',algo_name{5});
 hold on
-plot(metrics_csbl_con3{1,2},':','Color',all_colors(1, :),'Display',algo_name{1});
+plot(metrics_csbl_con3{1,2},'-','Color',all_colors(1, :),'Display',algo_name{1});
 grid on
 hold on
 slot1 = 2.^[0:10];
 slot2 = 2.^[0:8];
 slot3 = 2.^[0:7];
-con_am = plot(slot1,metrics_am_con3{1,2}(slot1),'<','Color',all_colors(2, :));
+con_am3 = plot(slot1,metrics_am_con3{1,2}(slot1),'<','Color',all_colors(2, :));
 hold on
-con_svd = plot(slot3,metrics_svd_con3{1,2}(slot3),'o','Color',all_colors(3, :));
+con_svd3 = plot(slot3,metrics_svd_con3{1,2}(slot3),'o','Color',all_colors(3, :));
 hold on
-con_sota = plot(slot2,metrics_sota_con3{1,2}(slot2),'+','Color',all_colors(5, :));
+con_sota3 = plot(slot2,metrics_sota_con3{1,2}(slot2),'+','Color',all_colors(5, :));
 hold on
-con_sbl = plot(slot2,metrics_csbl_con3{1,2}(slot2),'>','Color',all_colors(1, :));
+con_sbl3 = plot(slot2,metrics_csbl_con3{1,2}(slot2),'>','Color',all_colors(1, :));
 grid on
 
 xlim([0,4000])
-ylim([0.00001,10])
-yc = yline(metrics_csbl_con3{1,2}(end),'--','NMSE = 0.00054','LineWidth',3);
+yticks([1e-5 1e-4 1e-3 1e-2 1e-1 1 10])
+ylim([1e-5,10])
+yc = yline(metrics_csbl_con3{1,2}(end),'--','NMSE = 0.00054','LineWidth',3,'Interpreter','LaTex');
 hold on
-ys = yline(metrics_svd_con3{1,2}(end),'--','NMSE = 0.000039','LineWidth',3);
+ys = yline(metrics_svd_con3{1,2}(end),'--','NMSE = 0.000039','LineWidth',3,'Interpreter','LaTex');
 hold on
-yso = yline(metrics_sota_con3{1,2}(end),'--','NMSE = 0.00036','LineWidth',3);
+yso = yline(metrics_sota_con3{1,2}(end),'--','NMSE = 0.00036','LineWidth',3,'Interpreter','LaTex');
 hold on
-ya = yline(metrics_am_con3{1,2}(end),'--','NMSE = 0.000037','LineWidth',3);
+ya = yline(metrics_am_con3{1,2}(end),'--','NMSE = 0.000037','LineWidth',3,'Interpreter','LaTex');
 hold on
 ys.LabelVerticalAlignment = 'bottom';
 yso.LabelVerticalAlignment = 'bottom';
@@ -186,8 +186,8 @@ yc.FontSize = 16;
 ys.FontSize = 16;
 ya.FontSize = 16;
 yso.FontSize = 16;
-title('Known noise variance')
-legend([con_am,con_svd,con_sbl,con_sota],algo_name{2},algo_name{3},algo_name{1},algo_name{5},'Interpreter','LaTex');
+title('Known noise variance','Interpreter','LaTex')
+legend([con_am3,con_svd3,con_sbl3,con_sota3],algo_name{2},algo_name{3},algo_name{1},algo_name{5},'Interpreter','LaTex');
 set(gca, 'yscale', 'log');
 set(gca, 'xscale', 'log');
 set(0,'DefaultLineLineWidth',3)
@@ -201,6 +201,6 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('EM iteration number')
-ylabel('NMSE')
+xlabel('EM iteration number','Interpreter','LaTex')
+ylabel('NMSE','Interpreter','LaTex')
 legend('boxoff')

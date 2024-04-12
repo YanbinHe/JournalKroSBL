@@ -2,7 +2,6 @@
 % this file aims to reproduce the figures in the paper
 run('Configuration.m');
 
-
 % [all_themes, all_colors] = GetColors();
 % all_colors = all_themes{1,1};
 all_colors = [0, 70/255, 222/255;
@@ -11,7 +10,6 @@ all_colors = [0, 70/255, 222/255;
               0.9290, 0.6940, 0.1250
               255/255,0,1;
               0.49 0.18 0.56;];
-
 
 line_type_set{1} = '->';
 line_type_set{2} = '-<';
@@ -48,7 +46,7 @@ fontsizeman = 20;
 % data process and figures plot
 % take results.mat as input
 % preprocessing
-trials = 100;
+trials = 200;
 
 % first index: algorithm; second index: 3 values (nmse/srr/time); third
 % index: change with different conditions
@@ -56,34 +54,22 @@ resultSaggre = zeros(6,3,length(SNR));
 resultMaggre = zeros(6,3,length(M1));
 resultKaggre = zeros(6,3,length(K));
 
-
-
 for t = 1:trials
     filename = ['./results/noise_compare_', num2str(t),'.mat'];
     load(filename)
     for algo = 1:num_alg % for each algorithm
         metric = 1;
-        if algo == 4
-            for s = 1:length(SNR)
-                resultSaggre(algo,metric,s) = resultSaggre(algo,metric,s) + resultS{s}{algo,1}{metric,2}.^2;
-            end
-            for m = 1:length(M1)
-                resultMaggre(algo,metric,m) = resultMaggre(algo,metric,m) + resultM{m}{algo,1}{metric,2}.^2;
-            end
-            for k = 1:length(K)
-                resultKaggre(algo,metric,k) = resultKaggre(algo,metric,k) + resultK{k}{algo,1}{metric,2}.^2;
-            end
-        else
-            for s = 1:length(SNR)
-                resultSaggre(algo,metric,s) = resultSaggre(algo,metric,s) + resultS{s}{algo,1}{metric,2};
-            end
-            for m = 1:length(M1)
-                resultMaggre(algo,metric,m) = resultMaggre(algo,metric,m) + resultM{m}{algo,1}{metric,2};
-            end
-            for k = 1:length(K)
-                resultKaggre(algo,metric,k) = resultKaggre(algo,metric,k) + resultK{k}{algo,1}{metric,2};
-            end
+
+        for s = 1:length(SNR)
+            resultSaggre(algo,metric,s) = resultSaggre(algo,metric,s) + resultS{s}{algo,1}{metric,2};
         end
+        for m = 1:length(M1)
+            resultMaggre(algo,metric,m) = resultMaggre(algo,metric,m) + resultM{m}{algo,1}{metric,2};
+        end
+        for k = 1:length(K)
+            resultKaggre(algo,metric,k) = resultKaggre(algo,metric,k) + resultK{k}{algo,1}{metric,2};
+        end
+
 
         metric = 3;
         for s = 1:length(SNR)
@@ -110,7 +96,6 @@ for t = 1:trials
         for k = 1:length(K)
             resultKaggre(algo,metric-1,k) = resultKaggre(algo,metric-1,k) + resultK{k}{algo,1}{metric,2};
         end
-        
     end
 end
 
@@ -139,8 +124,8 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('SNR (dB)')
-ylabel('NMSE')
+xlabel('SNR (dB)','Interpreter','LaTex')
+ylabel('NMSE','Interpreter','LaTex')
 % axis square
 
 h1 = plot(SNR,reshape(resultSaggre(1,metric,:),[6,1]),legend_type_set{1},'Color',all_colors(1, :),'Display',algo_name{1});
@@ -176,8 +161,8 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('SNR (dB)')
-ylabel('SRR')
+xlabel('SNR (dB)','Interpreter','LaTex')
+ylabel('SRR','Interpreter','LaTex')
 % axis square
 
 h1 = plot(SNR,reshape(resultSaggre(1,metric,:),[6,1]),legend_type_set{1},'Color',all_colors(1, :),'Display',algo_name{1});
@@ -190,7 +175,7 @@ h4 = plot(SNR,reshape(resultSaggre(4,metric,:),[6,1]),legend_type_set{4},'Color'
 hold on
 h5 = plot(SNR,reshape(resultSaggre(5,metric,:),[6,1]),legend_type_set{5},'Color',all_colors(5, :),'Display',algo_name{5});
 hold on
-legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','northeast','Interpreter','LaTex')
+% legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','northeast','Interpreter','LaTex')
 
 %% plot figure 1/2 (b) NMSE/SRR vs measurements
 figure
@@ -214,8 +199,8 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('Under-sampling ratio')
-ylabel('NMSE')
+xlabel('Under-sampling ratio','Interpreter','LaTex')
+ylabel('NMSE','Interpreter','LaTex')
 % axis square
 
 h1 = plot(ratio,reshape(resultMaggre(1,metric,:),[5,1]),legend_type_set{1},'Color',all_colors(1, :),'Display',algo_name{1});
@@ -228,7 +213,7 @@ h4 = plot(ratio,reshape(resultMaggre(4,metric,:),[5,1]),legend_type_set{4},'Colo
 hold on
 h5 = plot(ratio,reshape(resultMaggre(5,metric,:),[5,1]),legend_type_set{5},'Color',all_colors(5, :),'Display',algo_name{5});
 hold on
-legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','northeast','Interpreter','LaTex')
+% legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','northeast','Interpreter','LaTex')
 
 figure
 metric = 2;
@@ -251,8 +236,8 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('Under-sampling ratio')
-ylabel('SRR')
+xlabel('Under-sampling ratio','Interpreter','LaTex')
+ylabel('SRR','Interpreter','LaTex')
 % axis square
 
 h1 = plot(ratio,reshape(resultMaggre(1,metric,:),[5,1]),legend_type_set{1},'Color',all_colors(1, :),'Display',algo_name{1});
@@ -265,7 +250,7 @@ h4 = plot(ratio,reshape(resultMaggre(4,metric,:),[5,1]),legend_type_set{4},'Colo
 hold on
 h5 = plot(ratio,reshape(resultMaggre(5,metric,:),[5,1]),legend_type_set{5},'Color',all_colors(5, :),'Display',algo_name{5});
 hold on
-legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','northeast','Interpreter','LaTex')
+% legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','northeast','Interpreter','LaTex')
 %% figure 1/2 (c) NMSE/SRR vs sparsity level
 figure
 metric = 1;
@@ -275,7 +260,7 @@ for algo_index = 1:num_alg
 end
 
 grid on
-ylim([1e-5,5]);
+ylim([1e-3,5]);
 % axis square
 h1 = plot(K,reshape(resultKaggre(1,metric,:),[5,1]),legend_type_set{1},'Color',all_colors(1, :),'Display',algo_name{1});
 hold on
@@ -287,7 +272,7 @@ h4 = plot(K,reshape(resultKaggre(4,metric,:),[5,1]),legend_type_set{4},'Color',a
 hold on
 h5 = plot(K,reshape(resultKaggre(5,metric,:),[5,1]),legend_type_set{5},'Color',all_colors(5, :),'Display',algo_name{5});
 hold on
-legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','northeast','Interpreter','LaTex')
+% legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','northeast','Interpreter','LaTex')
 set(gca, 'yscale', 'log');
 legend('boxoff')
 set(0,'DefaultLineLineWidth',3)
@@ -301,8 +286,8 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('Sparsity level')
-ylabel('NMSE')
+xlabel('Sparsity level','Interpreter','LaTex')
+ylabel('NMSE','Interpreter','LaTex')
 
 % create a new pair of axes inside current figure
 axes('position',[.55 .2 .35 .4])
@@ -349,8 +334,8 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('Sparsity level')
-ylabel('SRR')
+xlabel('Sparsity level','Interpreter','LaTex')
+ylabel('SRR','Interpreter','LaTex')
 % axis square
 
 h1 = plot(K,reshape(resultKaggre(1,metric,:),[5,1]),legend_type_set{1},'Color',all_colors(1, :),'Display',algo_name{1});
@@ -363,7 +348,7 @@ h4 = plot(K,reshape(resultKaggre(4,metric,:),[5,1]),legend_type_set{4},'Color',a
 hold on
 h5 = plot(K,reshape(resultKaggre(5,metric,:),[5,1]),legend_type_set{5},'Color',all_colors(5, :),'Display',algo_name{5});
 hold on
-legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','northeast','Interpreter','LaTex')
+% legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},algo_name{5}},'Location','northeast','Interpreter','LaTex')
 
 %% plot computation time
 
@@ -372,7 +357,7 @@ legend([h1 h2 h3 h4 h5],{algo_name{1},algo_name{2},algo_name{3},algo_name{4},alg
 % using the results in resultS
 
 timeAggre = zeros(6,5);
-
+trials = 200;
 for t = 1:trials % for different independent runs
     filename = ['./results/noise_compare_', num2str(t),'.mat'];
     load(filename)
@@ -406,10 +391,11 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('SNR (dB)')
-ylabel('Seconds (s)')
+xlabel('SNR (dB)','Interpreter','LaTex')
+ylabel('Seconds (s)','Interpreter','LaTex')
 %% Convergence performance
 load('simu_results_con.mat');
+fontsizeman = 20;
 figure
 plot(metrics_am_con{1,2}.^2,'-','Color',all_colors(2, :),'Display',algo_name{2});
 hold on
@@ -432,14 +418,14 @@ con_sbl = plot(slot2,metrics_csbl_con{1,2}(slot2).^2,'>','Color',all_colors(1, :
 grid on
 
 xlim([0,2500])
-ylim([0.00001,1])
-yc = yline(metrics_csbl_con{1,2}(end).^2,'--','NMSE = 0.00055','LineWidth',3);
+yticks([1e-5 1e-4 1e-3 1e-2 1e-1 1])
+yc = yline(metrics_csbl_con{1,2}(end).^2,'--','NMSE = 0.00055','LineWidth',3,'Interpreter','LaTex');
 hold on
-ys = yline(metrics_svd_con{1,2}(end).^2,'--','NMSE = 0.000044','LineWidth',3);
+ys = yline(metrics_svd_con{1,2}(end).^2,'--','NMSE = 0.000044','LineWidth',3,'Interpreter','LaTex');
 hold on
-yso = yline(metrics_sota_con{1,2}(end).^2,'--','NMSE = 0.0012','LineWidth',3);
+yso = yline(metrics_sota_con{1,2}(end).^2,'--','NMSE = 0.0012','LineWidth',3,'Interpreter','LaTex');
 hold on
-ya = yline(metrics_am_con{1,2}(end).^2,'--','NMSE = 0.000047','LineWidth',3);
+ya = yline(metrics_am_con{1,2}(end).^2,'--','NMSE = 0.000047','LineWidth',3,'Interpreter','LaTex');
 ys.LabelVerticalAlignment = 'bottom';
 yc.LabelHorizontalAlignment = 'left';
 ys.LabelHorizontalAlignment = 'left';
@@ -468,8 +454,8 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('EM iteration number')
-ylabel('NMSE')
+xlabel('EM iteration number','Interpreter','LaTex')
+ylabel('NMSE','Interpreter','LaTex')
 legend('boxoff')
 %% Convergence performance with prune
 figure
@@ -494,12 +480,12 @@ con_sbl = plot(slot2,metrics_csbl_con2{1,2}(slot2).^2,'>','Color',all_colors(1, 
 grid on
 
 xlim([0,500])
-ylim([0.00001,1])
-yc = yline(metrics_csbl_con2{1,2}(end).^2,'--','NMSE = 0.00052','LineWidth',3);
+yticks([1e-5 1e-4 1e-3 1e-2 1e-1 1])
+yc = yline(metrics_csbl_con2{1,2}(end).^2,'--','NMSE = 0.00052','LineWidth',3,'Interpreter','LaTex');
 hold on
-ys = yline(metrics_svd_con2{1,2}(end).^2,'--','NMSE = 0.000035','LineWidth',3);
+ys = yline(metrics_svd_con2{1,2}(end).^2,'--','NMSE = 0.000035','LineWidth',3,'Interpreter','LaTex');
 hold on
-em = xline(150,'-','EM ends','LineWidth',3);
+em = xline(150,'-','EM ends','LineWidth',3,'Interpreter','LaTex');
 % yso = yline(metrics_sota_con2{1,2}(end),'--','NMSE = 0.0353','LineWidth',3);
 % hold on
 % ya = yline(metrics_am_con2{1,2}(end),'--','NMSE = 0.0069','LineWidth',3);
@@ -534,8 +520,8 @@ set(get(gca,'Title'),'FontSize',fontsizeman)
 set(get(gca,'Xlabel'),'FontWeight','bold')
 set(get(gca,'Ylabel'),'FontWeight','bold')
 set(get(gca,'Title'),'FontWeight','bold')
-xlabel('EM iteration number')
-ylabel('NMSE')
+xlabel('EM iteration number','Interpreter','LaTex')
+ylabel('NMSE','Interpreter','LaTex')
 legend('boxoff')
 %% local minima
 
