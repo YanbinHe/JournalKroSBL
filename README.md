@@ -1,6 +1,10 @@
 # JournalKroSBL
 
-Implementation for KroSBL and PC-KroSBL.
+Implementation for algorithms KroSBL and PC-KroSBL in paper
+
+["Bayesian Algorithms for Kronecker-structured Sparse Vector Recovery With Application to IRS-MIMO Channel Estimation"](https://arxiv.org/pdf/2307.14719)
+
+This paper has been accepted in IEEE Transactions on Signal Processing 2024.
 
 In order to reproduce the results, follow the instructions in README in each directory.
 
